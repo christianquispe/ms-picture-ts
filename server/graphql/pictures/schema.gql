@@ -1,0 +1,15 @@
+type Query {
+  getBuyer(input: InputTest): Test
+}
+
+type Mutation {
+  test(input: InputTest): Test
+}
+
+input InputTest {
+  name: String
+}
+
+type Test {
+  name: String
+}

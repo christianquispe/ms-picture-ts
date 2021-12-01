@@ -1,0 +1,33 @@
+{
+  "compilerOnSave": false,
+  "compilerOptions": {
+    "module": "commonjs",
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "es2015"
+    ],
+    "target": "es6",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "strict": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "app.ts",
+    "server/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "typeRoots": [
+    "../node_modules/@types/index.d.ts"
+  ]
+}
