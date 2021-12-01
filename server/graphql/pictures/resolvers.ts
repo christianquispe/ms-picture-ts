@@ -11,7 +11,7 @@ const resolvers = {
       } = args;
 
       // Process
-      logger.info(ctx, "Validating existence...");
+      logger.info(ctx, "Working...");
 
       // Response
       logger.info(ctx, "Finished!");
@@ -32,7 +32,7 @@ const resolvers = {
       // Data
 
       // Process
-      logger.info(ctx, "Validating if exist...");
+      logger.info(ctx, "Working...");
 
       // Response
       logger.info(ctx, "Finished !!!");

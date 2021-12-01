@@ -5,6 +5,9 @@
   "repository": "git@github.com:christianquispe/ms-picture-ts.git",
   "author": "christianquispe <christianquispecamasca@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon app.ts"
+  },
   "dependencies": {
     "@graphql-tools/schema": "^8.3.1",
     "@graphql-tools/stitch": "^8.4.2",
