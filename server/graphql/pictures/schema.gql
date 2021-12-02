@@ -1,15 +1,24 @@
 type Query {
-  getBuyer(input: InputTest): Test
+  getPicture(input: InputGetPicture!): Picture
 }
 
 type Mutation {
-  test(input: InputTest): Test
+  addPicture(input: InputPicture!): Picture
 }
 
-input InputTest {
-  name: String
+input InputGetPicture {
+  id: ID!
 }
 
-type Test {
+input InputPicture {
+  name: String!
+  description: String!
+}
+
+type Picture {
   name: String
+  description: String
+  status: String
+  createdAt: String
+  updatedAt: String
 }
