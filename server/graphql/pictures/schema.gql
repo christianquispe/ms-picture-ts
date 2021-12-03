@@ -1,5 +1,19 @@
 type Query {
   getPicture(input: InputGetPicture!): Picture
+  allPictures(paginated: Paginated, filter: FilterPicture): PaginatedPicture
+}
+
+input Paginated {
+  page: Int
+  perPage: Int
+  sortField: String
+  sortOrder: String
+}
+
+input FilterPicture {
+  q: String
+  ids: [ID]
+  id: ID
 }
 
 type Mutation {
@@ -15,10 +29,24 @@ input InputPicture {
   description: String!
 }
 
+type PaginatedPicture {
+  pageInfo: PageInfo
+  pictures: [Picture]
+}
+
 type Picture {
+  _id: ID
   name: String
   description: String
   status: String
   createdAt: String
   updatedAt: String
+}
+
+type PageInfo {
+  total: Int
+  currentPage: Int
+  perPage: Int
+  hasPreviousPage: Boolean
+  hasNextPage: Boolean
 }

@@ -6,7 +6,43 @@ export interface IPicture {
   status?: string;
 }
 
+interface InputPaginated {
+  page: number;
+  perPage: number;
+  aggs: TMatchAggs["$match"];
+}
+
+export type TMatchAggs = {
+  $match: {
+    [key: string]:
+      | {
+          [key: string]: {
+            $regex: RegExp;
+          };
+        }[]
+      | string;
+  };
+};
+
 class PictureService {
+  async getAll(aggs: TMatchAggs["$match"]) {
+    const response: IPicture = await Pictures.find(aggs).lean();
+    return response;
+  }
+
+  async getPaginated(paginated: InputPaginated) {
+    const { page, perPage, aggs } = paginated;
+
+    const total = await Pictures.find(aggs).countDocuments();
+    return {
+      total,
+      currentPage: page,
+      perPage,
+      hasPreviousPage: page > 1,
+      hasNextPage: total > page * perPage,
+    };
+  }
+
   async create(buyer: Omit<IPicture, "_id">) {
     const response: IPicture = await Pictures.create(buyer);
 

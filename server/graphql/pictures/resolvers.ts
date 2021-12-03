@@ -1,5 +1,6 @@
-import PictureService from "./services";
+import PictureService, { TMatchAggs } from "./services";
 
+import { escapeRegExp } from "../../../helpers/utils.helper";
 import logger from "../../../helpers/logger.helper";
 
 import { IPicture } from "./services";
@@ -8,8 +9,66 @@ interface IArgs<T> {
   input: Omit<T, "_id">;
 }
 
+interface IPaginate {
+  page?: number;
+  perPage?: number;
+  sortField?: string;
+  sortOrder?: string;
+}
+
+interface IFilter {
+  q?: string;
+  ids?: string;
+  id?: string;
+}
+
 const resolvers = {
   Query: {
+    allPictures: async (
+      _root: any,
+      args: { paginated: IPaginate; filter: IFilter & { status: string } },
+      _context: any
+    ) => {
+      const ctx = "GET_PICTURES";
+      logger.info(ctx, "Starting...");
+      // Input
+      const { filter, paginated = { page: 1, perPage: 10 } } = args;
+
+      const { page = 1, perPage = 10 } = paginated;
+      const { q, id, ids, status } = filter;
+
+      const aggs: TMatchAggs = { $match: {} };
+
+      if (q) {
+        const reg = { $regex: new RegExp(escapeRegExp(q.trim()), "i") };
+        aggs.$match["$or"] = [{ name: reg }, { description: reg }];
+      }
+
+      if (status) {
+        aggs.$match["status"] = status;
+      }
+
+      // Process
+      logger.info(ctx, "Working...");
+      const pageInfo = await PictureService.getPaginated({
+        page,
+        perPage,
+        aggs: aggs.$match,
+      });
+
+      const pictures = await PictureService.getAll(aggs.$match);
+      logger.info(ctx, "Validating if exist...");
+
+      // Data response
+      const response = {
+        pageInfo,
+        pictures: pictures,
+      };
+
+      // Response
+      logger.info(ctx, "Finished!");
+      return response;
+    },
     getPicture: async (
       _root: any,
       args: IArgs<{ id: string }>,
