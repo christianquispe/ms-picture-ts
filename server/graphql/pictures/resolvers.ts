@@ -1,3 +1,5 @@
+import moongose from "mongoose";
+
 import PictureService, { TMatchAggs } from "./services";
 
 import { escapeRegExp } from "../../../helpers/utils.helper";
@@ -18,7 +20,7 @@ interface IPaginate {
 
 interface IFilter {
   q?: string;
-  ids?: string;
+  ids?: string[];
   id?: string;
 }
 
@@ -35,7 +37,7 @@ const resolvers = {
       const { filter, paginated = { page: 1, perPage: 10 } } = args;
 
       const { page = 1, perPage = 10 } = paginated;
-      const { q, id, ids, status } = filter;
+      const { q, ids, status } = filter;
 
       const aggs: TMatchAggs = { $match: {} };
 
@@ -48,7 +50,11 @@ const resolvers = {
         aggs.$match["status"] = status;
       }
 
-      // Process
+      if (ids) {
+        ids.forEach((id) => new moongose.Types.ObjectId(id));
+        aggs.$match["_id"] = { $in: ids };
+      }
+
       logger.info(ctx, "Working...");
       const pageInfo = await PictureService.getPaginated({
         page,

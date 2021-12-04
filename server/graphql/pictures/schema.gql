@@ -13,7 +13,6 @@ input Paginated {
 input FilterPicture {
   q: String
   ids: [ID]
-  id: ID
   status: String
 }
 

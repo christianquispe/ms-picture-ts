@@ -6,7 +6,9 @@
   "author": "christianquispe <christianquispecamasca@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon app.ts"
+    "dev": "nodemon app.ts",
+    "build-ts": "tsc",
+    "build": "npm run build-ts && npm run rsync"
   },
   "dependencies": {
     "@graphql-tools/schema": "^8.3.1",

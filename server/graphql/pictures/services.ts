@@ -20,13 +20,14 @@ export type TMatchAggs = {
             $regex: RegExp;
           };
         }[]
-      | string;
+      | string
+      | { $in: any };
   };
 };
 
 class PictureService {
-  async getAll(aggs: TMatchAggs["$match"]) {
-    const response: IPicture = await Pictures.find(aggs).lean();
+  async getAll(aggs?: TMatchAggs["$match"]) {
+    const response: IPicture = await Pictures.find(aggs || {}).lean();
     return response;
   }
 
