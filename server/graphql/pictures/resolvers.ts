@@ -8,7 +8,7 @@ import logger from "../../../helpers/logger.helper";
 import { IPicture } from "./services";
 
 interface IArgs<T> {
-  input: Omit<T, "_id">;
+  input: T;
 }
 
 interface IPaginate {
@@ -101,7 +101,11 @@ const resolvers = {
     },
   },
   Mutation: {
-    addPicture: async (_root: any, args: IArgs<IPicture>, _context: any) => {
+    addPicture: async (
+      _root: any,
+      args: IArgs<Omit<IPicture, "_id">>,
+      _context: any
+    ) => {
       const ctx = "CREATE_PICTURE";
       logger.info(ctx, "Starting...");
       // Input
@@ -110,6 +114,37 @@ const resolvers = {
       // Process
       logger.info(ctx, "Working...");
       const response = await PictureService.create({ ...input });
+
+      // Response
+      logger.info(ctx, "Finished!");
+      return response;
+    },
+    updPicture: async (
+      _root: any,
+      args: IArgs<Omit<IPicture, "_id"> & { id: string }>,
+      _context: any
+    ) => {
+      const ctx = "UPDATE_PICTURE";
+      logger.info(ctx, "Starting...");
+      // Input
+      const {
+        input: { id, status, name, description },
+      } = args;
+
+      logger.info(ctx, "Validate if exist...");
+
+      const picture = await PictureService.findById(id);
+      if (!picture) {
+        throw new Error("Esta cuenta no existe");
+      }
+
+      // Process
+      logger.info(ctx, "Working...");
+      const response = await PictureService.modify(picture._id, {
+        status,
+        name,
+        description,
+      });
 
       // Response
       logger.info(ctx, "Finished!");
