@@ -3,6 +3,16 @@ type Query {
   allPictures(paginated: Paginated, filter: FilterPicture): PaginatedPicture
 }
 
+type Mutation {
+  addPicture(input: InputAddPicture!): Picture
+  updPicture(input: InputUpdPicture!): Picture
+}
+
+enum Status {
+  available
+  unavailable
+}
+
 input Paginated {
   page: Int
   perPage: Int
@@ -16,17 +26,20 @@ input FilterPicture {
   status: String
 }
 
-type Mutation {
-  addPicture(input: InputPicture!): Picture
-}
-
 input InputGetPicture {
   id: ID!
 }
 
-input InputPicture {
+input InputAddPicture {
   name: String!
   description: String!
+}
+
+input InputUpdPicture {
+  id: String
+  name: String
+  description: String
+  status: Status
 }
 
 type PaginatedPicture {
