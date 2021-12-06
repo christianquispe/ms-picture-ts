@@ -6,6 +6,7 @@ type Query {
 type Mutation {
   addPicture(input: InputAddPicture!): Picture
   updPicture(input: InputUpdPicture!): Picture
+  updStatusPicture(input: InputUpdStatusPicture!): Picture
 }
 
 enum Status {
@@ -40,6 +41,11 @@ input InputUpdPicture {
   name: String
   description: String
   status: Status
+}
+
+input InputUpdStatusPicture {
+  id: ID!
+  status: Status!
 }
 
 type PaginatedPicture {
