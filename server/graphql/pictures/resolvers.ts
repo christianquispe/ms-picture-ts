@@ -150,6 +150,35 @@ const resolvers = {
       logger.info(ctx, "Finished!");
       return response;
     },
+    updStatusPicture: async (
+      _root: any,
+      args: IArgs<Pick<IPicture, "status"> & { id: string }>,
+      _context: any
+    ) => {
+      const ctx = "UPDATE_STATUS_PICTURE";
+      logger.info(ctx, "Starting...");
+      // Input
+      const {
+        input: { id, status },
+      } = args;
+
+      logger.info(ctx, "Validate if exist...");
+
+      const picture = await PictureService.findById(id);
+      if (!picture) {
+        throw new Error("Esta cuenta no existe");
+      }
+
+      // Process
+      logger.info(ctx, "Working...");
+      const response = await PictureService.modify(picture._id, {
+        status,
+      });
+
+      // Response
+      logger.info(ctx, "Finished!");
+      return response;
+    },
   },
 };
 
