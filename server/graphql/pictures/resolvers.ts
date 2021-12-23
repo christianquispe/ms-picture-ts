@@ -28,13 +28,16 @@ const resolvers = {
   Query: {
     allPictures: async (
       _root: any,
-      args: { paginated: IPaginate; filter: IFilter & { status: string } },
+      args: { paginated?: IPaginate; filter?: IFilter & { status: string } },
       _context: any
     ) => {
       const ctx = "GET_PICTURES";
       logger.info(ctx, "Starting...");
       // Input
-      const { filter, paginated = { page: 1, perPage: 10 } } = args;
+      const {
+        filter = { q: undefined, ids: undefined, status: undefined },
+        paginated = { page: 1, perPage: 10 },
+      } = args;
 
       const { page = 1, perPage = 10 } = paginated;
       const { q, ids, status } = filter;

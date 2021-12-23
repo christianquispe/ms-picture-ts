@@ -12,6 +12,11 @@ const pictureSchema = new mongoose.Schema({
     default: "unavailable",
     enum: Status,
   },
+  price: { type: Number },
+  simbol: {
+    type: String,
+    default: "S/",
+  },
   createdAt: {
     type: Date,
     default: Date.now,

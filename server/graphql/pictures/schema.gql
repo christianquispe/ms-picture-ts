@@ -58,6 +58,8 @@ type Picture {
   name: String
   description: String
   status: String
+  price: Int
+  simbol: String
   createdAt: String
   updatedAt: String
 }
