@@ -4,9 +4,10 @@ import { stitchSchemas } from "@graphql-tools/stitch";
 import logger from "../../helpers/logger.helper";
 
 import pictures from "./pictures";
+import cart from "./cart";
 
 const gatewaySchema = stitchSchemas({
-  subschemas: [pictures],
+  subschemas: [pictures, cart],
 });
 
 const routes = graphqlHTTP({

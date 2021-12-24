@@ -1,0 +1,42 @@
+type Query {
+  getTest(input: InputGetTest!): Test
+}
+
+type Mutation {
+  addToCart(input: InputAddToCart!): CartItem
+}
+
+input InputGetTest {
+  test: String
+}
+
+input InputAddToCart {
+  type: String!
+  productId: ID!
+  quantity: Int
+}
+
+type CartItem {
+  type: String
+  productId: String
+  quantity: Int
+  productSummary: ProductSummary
+  createdAt: String
+  updatedAt: String
+}
+
+type ProductSummary {
+  _id: ID
+  name: String
+  description: String
+  status: String
+  price: Int
+  img: String
+  simbol: String
+  createdAt: String
+  updatedAt: String
+}
+
+type Test {
+  test: String
+}
