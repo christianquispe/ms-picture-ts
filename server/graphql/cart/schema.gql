@@ -1,9 +1,22 @@
 type Query {
   getTest(input: InputGetTest!): Test
+  allCart(paginated: Paginated, filter: FilterCart): PaginatedCart
 }
 
 type Mutation {
   addToCart(input: InputAddToCart!): CartItem
+}
+
+input Paginated {
+  page: Int
+  perPage: Int
+  sortField: String
+  sortOrder: String
+}
+
+input FilterCart {
+  q: String
+  ids: [ID]
 }
 
 input InputGetTest {
@@ -39,4 +52,17 @@ type ProductSummary {
 
 type Test {
   test: String
+}
+
+type PaginatedCart {
+  pageInfo: PageInfo
+  cart: [CartItem]
+}
+
+type PageInfo {
+  total: Int
+  currentPage: Int
+  perPage: Int
+  hasPreviousPage: Boolean
+  hasNextPage: Boolean
 }
