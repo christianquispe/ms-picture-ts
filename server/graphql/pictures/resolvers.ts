@@ -131,7 +131,7 @@ const resolvers = {
       logger.info(ctx, "Starting...");
       // Input
       const {
-        input: { id, status, name, description },
+        input: { id, status, name, description, img },
       } = args;
 
       logger.info(ctx, "Validate if exist...");
@@ -147,6 +147,7 @@ const resolvers = {
         status,
         name,
         description,
+        img,
       });
 
       // Response

@@ -37,10 +37,11 @@ input InputAddPicture {
 }
 
 input InputUpdPicture {
-  id: String
+  id: ID!
   name: String
   description: String
   status: Status
+  img: String
 }
 
 input InputUpdStatusPicture {
@@ -59,6 +60,7 @@ type Picture {
   description: String
   status: String
   price: Int
+  img: String
   simbol: String
   createdAt: String
   updatedAt: String

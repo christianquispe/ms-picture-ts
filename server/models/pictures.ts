@@ -13,6 +13,11 @@ const pictureSchema = new mongoose.Schema({
     enum: Status,
   },
   price: { type: Number },
+  img: {
+    type: String,
+    default:
+      "https://i.pinimg.com/originals/77/82/21/778221a7b51e8ea9142e4a724f3edf87.jpg",
+  },
   simbol: {
     type: String,
     default: "S/",

@@ -5,6 +5,7 @@ export interface IPicture {
   name?: string;
   status?: string;
   description?: string;
+  img?: string
 }
 
 interface InputPaginated {
